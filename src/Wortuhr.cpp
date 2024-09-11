@@ -351,7 +351,13 @@ void setup() {
     // OTA
     //-------------------------------------
 
-    httpUpdater.setup(&httpServer);
+    httpUpdater.setup(&httpServer, HTTP_AUTH_USER, HTTP_AUTH_PASSWORD);
+    httpServer.on("/", []() {
+        if (!httpServer.authenticate(HTTP_AUTH_USER, HTTP_AUTH_PASSWORD)) {
+            return httpServer.requestAuthentication();
+        }
+        httpServer.send(200, "text/plain", "Login OK");
+    });
     httpServer.onNotFound([]() {
         // redirect port 81 not found pages to port 80
         httpServer.sendHeader(
@@ -373,6 +379,7 @@ void setup() {
     //-------------------------------------
 
     webSocket.begin();
+    webSocket.setAuthorization(HTTP_AUTH_USER, HTTP_AUTH_PASSWORD);
     webSocket.onEvent(webSocketEvent);
 
     Serial.println("Websocket started");
