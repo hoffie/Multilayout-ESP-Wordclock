@@ -287,3 +287,6 @@
 #define REVERSE_MINUTE_DIR false
 #define MIRROR_FRONT_VERTICAL false
 #define MIRROR_FRONT_HORIZONTAL false
+
+#define HTTP_AUTH_USER "wortuhr"
+#define HTTP_AUTH_PASSWORD "CHANGEME

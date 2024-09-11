@@ -174,3 +174,5 @@ typings/
 .vscode/extensions.json
 .vscode/launch.json
 .vscode/settings.json
+
+include/config_private.h
