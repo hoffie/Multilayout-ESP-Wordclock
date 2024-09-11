@@ -168,6 +168,8 @@ void setup() {
     Serial.println(powerCycleCount);
     if (powerCycleCount == 5) {
         G.sernr++;
+        wifiManager.resetSettings();
+        wifiManager.reboot();
         Serial.println("Reset to initial values");
     }
 
