@@ -7,6 +7,10 @@ html, body {
     font-size: 16px;
 }
 
+body:not(.is-expert) .expert {
+    display: none
+}
+
 .pure-img-responsive {
     max-width: 100%;
     height: auto;

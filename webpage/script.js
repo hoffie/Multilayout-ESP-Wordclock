@@ -2,6 +2,10 @@
 const iro = window.iro; // require("@jaames/iro");
 (function(window, document) {
 
+	if (window.location.href.search(/expert/) !== -1) {
+		document.body.classList.add("is-expert");
+	}
+
 	let layout = document.getElementsByClassName("layout")[0];
 	let menu = document.getElementsByClassName("menu")[0];
 	let menuLink = document.getElementsByClassName("hamburger")[0];

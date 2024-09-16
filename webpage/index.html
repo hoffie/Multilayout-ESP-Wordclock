@@ -93,7 +93,7 @@
                 <li class="pure-menu-item" role="none"><a href="#" class="pure-menu-link" role="menuitem" data-navigation="functions" data-i18next="functions.h1"></a></li>
                 <li class="pure-menu-item" role="none"><a href="#" class="pure-menu-link" role="menuitem" data-navigation="frontoptions" data-i18next="view.h1"></a></li>
                 <li class="pure-menu-item" role="none"><a href="#" class="pure-menu-link" role="menuitem" data-navigation="settings" data-i18next="settings.h1"></a></li>
-                <li class="pure-menu-item" role="none"><a href="#" class="pure-menu-link" role="menuitem" data-navigation="smart-home" data-i18next="smart-home.h1"></a></li>
+                <li class="pure-menu-item expert" role="none"><a href="#" class="pure-menu-link" role="menuitem" data-navigation="smart-home" data-i18next="smart-home.h1"></a></li>
                 <li class="pure-menu-item" role="none"><a href="#" class="pure-menu-link" role="menuitem" data-navigation="about" data-i18next="about.h1"></a></li>
 
                 <li class="pure-menu-heading" role="none"><label for="language" data-i18next="menu.language.label"></label></li>
@@ -134,11 +134,13 @@
                                 <svg aria-hidden="true"><use href="#icon-mode-wordclock"/></svg>
                                 <span data-i18next="functions.color.foreground"></span>
                             </label>
+                            <p class="expert">
                             <label for="colorwheel-background" class="radio-select">
                                 <input id="colorwheel-background" type="radio" name="colorwheel" value="color">
                                 <svg aria-hidden="true"><use href="#icon-color-background"/></svg>
                                 <span data-i18next="functions.color.background"></span>
                             </label>
+                            </p>
                             <div class="specific-layout-7">
                             <label for="colorwheel-frame" class="radio-select">
                                 <input id="colorwheel-frame" type="radio" name="colorwheel" value="color">
@@ -175,7 +177,7 @@
                                 <svg aria-hidden="true"><use href="#icon-mode-wordclock"/></svg>
                                 <span data-i18next="functions.mode.wordclock"></span>
                             </label>
-                            <label for="mode-color" class="radio-select">
+                            <label for="mode-color" class="radio-select expert">
                                 <input id="mode-color" type="radio" name="mode" value="color" checked>
                                 <svg aria-hidden="true"><use href="#icon-mode-color"/></svg>
                                 <span data-i18next="functions.mode.color"></span>
@@ -200,7 +202,7 @@
                                 <svg aria-hidden="true"><use href="#icon-mode-rainbow"/></svg>
                                 <span data-i18next="functions.mode.rainbow"></span>
                             </label>
-                            <label for="mode-change" class="radio-select">
+                            <label for="mode-change" class="radio-select expert">
                                 <input id="mode-change" type="radio" name="mode" value="color-change" checked>
                                 <svg aria-hidden="true"><use href="#icon-mode-color-change"/></svg>
                                 <span data-i18next="functions.mode.color-change"></span>
@@ -254,7 +256,7 @@
                             <label class="slider-label" for="transition-speed" data-i18next="functions.transition.speed.label"></label> <span class="value" id="transition-speed-value">30</span>
                             <input id="transition-speed" type="range" min="0" max="60" value="0">
                         </div>
-                        <div class="pure-control-group">
+                        <div class="pure-control-group expert">
                             <label for="transition-demo" data-i18next="functions.transition.demo.label"></label>
                             <input type="checkbox" id="transition-demo" >
                         </div>
@@ -331,7 +333,7 @@
                     <h1 data-i18next="view.h1"></h1>
                 </header>
 
-                <div class="box">
+                <div class="box expert">
                     <h2 data-i18next="view.front.h2"></h2>
                     <form class="pure-form pure-form-aligned">
                         <fieldset>
@@ -455,7 +457,7 @@
                 </form>
                 </div>
 
-                <div class="box">
+                <div class="box expert">
                     <h2 data-i18next="view.minutes.h2"></h2>
                     <form class="pure-form pure-form-aligned">
                         <div class="pure-control-group">
@@ -471,7 +473,7 @@
                 </div>
 
                 <!-- Specific UHR169 Start-->
-                <div class="box specific-layout-4">
+                <div class="box specific-layout-4 expert">
                     <h2 data-i18next="view.seconds.h2"></h2>
                     <form class="pure-form pure-form-aligned">
                         <div class="pure-control-group">
@@ -542,7 +544,7 @@
                     </form>
                 </div>
 
-                <div class="box">
+                <div class="box expert">
                     <h2 data-i18next="settings.led-type.h2"></h2>
                     <form class="pure-form pure-form-aligned">
                         <fieldset>
@@ -780,7 +782,7 @@
                     </form>
                 </div>
             </section>
-            <section class="pure-u-24-24 section section-smart-home">
+            <section class="pure-u-24-24 section section-smart-home expert">
                 <header class="header">
                     <svg aria-hidden="true"><use href="#light-bulb"/></svg>
                     <h1 data-i18next="smart-home.h1"></h1>
