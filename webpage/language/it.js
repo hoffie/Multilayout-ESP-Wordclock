@@ -107,6 +107,7 @@ let TRANSLATION_IT = {
 			"de-10-11-nero-frame": "🇩🇪 10 × 11 Nero Rahmen",
 			"de-10-11-bayerisch": "🇩🇪 10 × 11 bavarese",
 			"de-10-11-schwaebisch": "🇩🇪 10 × 11 Stile svevo",
+			"de-10-11-fraengisch": "🇩🇪 10 × 11 Frängisch",
 			"de-11-11": "🇩🇪 11 × 11",
 			"de-11-11-v2": "🇩🇪 11 × 11 Version 2",
 			"de-11-11-v3": "🇩🇪 11 × 11 (panbachi)",

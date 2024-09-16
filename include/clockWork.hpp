@@ -142,6 +142,8 @@ iUhrType *ClockWork::getPointer(uint8_t type) {
         return &_ro10x11;
     case Ger10x11schwaebisch:
         return &_de10x11schwaebisch;
+    case Ger10x11fraenkisch:
+        return &_de10x11fraenkisch;
     case Fr10x11:
         return &_fr10x11;
     case Se10x11:
@@ -653,6 +655,10 @@ void ClockWork::setMinute(uint8_t min, uint8_t &offsetHour, bool &fullHour) {
         case 3:
         case 4:
         case 5:
+            if (usedUhrType->hasFive()) {
+                usedUhrType->show(getFrontWordForNum(min));
+                usedUhrType->show(FrontWord::nach);
+            }
         case 6:
         case 7:
         case 8:
@@ -864,6 +870,11 @@ void ClockWork::setMinute(uint8_t min, uint8_t &offsetHour, bool &fullHour) {
 
         if (G.UhrtypeDef == Ru10x11) {
             offsetHour = 0;
+        }
+
+        int8_t overrideOffsetHour = usedUhrType->getOffsetHour(min);
+        if (overrideOffsetHour != -1) {
+            offsetHour = overrideOffsetHour;
         }
     }
 }

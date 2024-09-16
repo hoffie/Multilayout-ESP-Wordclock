@@ -178,6 +178,8 @@ public:
 
     virtual const bool hasZwanzig() { return true; }
 
+    virtual const bool hasFive() { return false; }
+
     virtual const bool hasTwentyfive() { return false; }
 
     virtual const bool hasThirtyfive() { return false; }
@@ -203,6 +205,8 @@ public:
     virtual const bool hasSpecialWordHappyBirthday() { return false; }
 
     virtual const bool hasSpecialWordBeen() { return false; }
+
+    virtual const int getOffsetHour(uint8_t minutes) { return -1; }
 
     virtual const uint16_t getFrontMatrixIndex(const uint8_t row, uint8_t col) {
 

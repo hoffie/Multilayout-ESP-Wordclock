@@ -94,6 +94,7 @@ let TRANSLATION_RU = {
 			"de-10-11-nero-frame": "🇩🇪 10 × 11 Nero Rahmen",
 			"de-10-11-bayerisch": "🇩🇪 10 × 11 Баварский",
 			"de-10-11-schwaebisch": "🇩🇪 10 × 11 Швабия",
+			"de-10-11-fraengisch": "🇩🇪 10 × 11 Frängisch",
 			"de-11-11": "🇩🇪 11 × 11",
 			"de-11-11-v2": "🇩🇪 11 × 11 V2",
 			"de-11-11-v3": "🇩🇪 11 × 11 (panbachi)",
