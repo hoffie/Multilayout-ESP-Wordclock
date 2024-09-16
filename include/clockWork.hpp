@@ -153,7 +153,8 @@ iUhrType *ClockWork::getPointer(uint8_t type) {
     case Ch10x11V2:
         return &_ch10x11v2;
     default:
-        return nullptr;
+        Serial.println("Invalid Uhrtype, defaulting to EN10x11 to avoid crashes.");
+        return &_en10x11;
     }
 }
 
