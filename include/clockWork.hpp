@@ -1119,6 +1119,7 @@ void ClockWork::loop(struct tm &tm) {
     // Secounds and LDR Routine
     //------------------------------------------------
     if (lastSecond != _second) {
+        led.tickSecond();
 
 #if GENERAL_VERBOSE
         char currentTime[80];

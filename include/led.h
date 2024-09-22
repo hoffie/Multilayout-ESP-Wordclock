@@ -1,9 +1,16 @@
 #pragma once
 
 #include <NeoPixelBus.h>
+#include <Uhr.h>
 
 class Led {
 private:
+    HsbColor currentLedColors[MAX_ROW_SIZE * MAX_COL_SIZE];
+    uint16_t maxLedIndex;
+    uint16_t lastTotalMilliAmperes;
+    uint8_t brightnessAdjustmentTenth = 10;
+    uint8_t brightnessAdjustmentTenthMinOverTime = 10;
+    uint8_t brightnessAdjustmentPassedSeconds;
     //------------------------------------------------------------------------------
     // Helper Functions
     //------------------------------------------------------------------------------
@@ -18,6 +25,10 @@ private:
     void toggleDigitalClockSecond(const fontSize &usedFontSize,
                                   const uint8_t &offsetRow1,
                                   const uint8_t &offsetMin0);
+    inline void recordColor(uint16_t ledIndex, HsbColor newColor);
+    void enforceMilliAmpereLimit();
+    inline void updateTotalMilliAmperes(uint16_t ledIndex, RgbColor newColor);
+    void setPixelRaw(uint16_t ledIndex, RgbColor color);
 
 public:
     Led(/* args */) = default;
@@ -50,7 +61,7 @@ public:
     // Pixel set Functions
     //------------------------------------------------------------------------------
     void setState(const bool newState);
-    void setPixel(uint16_t ledIndex, HsbColor color);
+    void setPixel(uint16_t ledIndex, RgbColor color);
     void setPixel(uint8_t row, uint8_t col, HsbColor color);
     void setbyFrontMatrix(ColorPosition position = Foreground,
                           bool applyMirrorAndReverse = true);
@@ -69,6 +80,7 @@ public:
     //------------------------------------------------------------------------------
     bool getState();
     RgbColor getPixel(uint16_t i);
+    inline uint32_t getMilliAmperesForColor(RgbColor color);
 
     //------------------------------------------------------------------------------
     // Pixel Clear Functions
@@ -88,4 +100,6 @@ public:
     void showDigitalClock(const char min1, const char min0, const char h1,
                           const char h0, bool parametersChanged);
     void show();
+
+    inline void tickSecond();
 };

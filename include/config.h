@@ -288,7 +288,20 @@
 #define MIRROR_FRONT_VERTICAL false
 #define MIRROR_FRONT_HORIZONTAL false
 
+#define NUM_REBOOTS_FOR_RESET 5
+
 #define HTTP_AUTH_USER "wortuhr"
 #define HTTP_AUTH_PASSWORD "CHANGEME"
+
+/*
+ * If the estimated power consumption of the currently active LEDs reaches this value,
+ * the brightness is reduced accordingly.
+ */
+#define LED_MAX_MILLI_AMPERES 1800
+/*
+ * Defines the number seconds which have to pass before considering
+ * upping the brightnessAdjustmentTenth again.
+*/
+#define LED_BRIGHTNESS_ADJUSTMENT_SMOOTHING_SECONDS 5
 
 #include "config_private.h"

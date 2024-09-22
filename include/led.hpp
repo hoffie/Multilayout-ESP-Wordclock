@@ -232,13 +232,64 @@ void Led::setState(const bool newState) {
 
 //------------------------------------------------------------------------------
 
-void Led::setPixel(uint16_t ledIndex, HsbColor color) {
+void Led::setPixel(uint16_t ledIndex, RgbColor color) {
+    recordColor(ledIndex, color);
+}
+
+inline void Led::setPixelRaw(uint16_t ledIndex, RgbColor rgbColor) {
     if (G.Colortype == Grbw) {
         strip_RGBW->SetPixelColor(ledIndex,
-                                  convertRgbToRgbw(RgbColor(color), G.wType));
+                                  convertRgbToRgbw(rgbColor, G.wType));
     } else {
-        strip_RGB->SetPixelColor(ledIndex, color);
+        strip_RGB->SetPixelColor(ledIndex, rgbColor);
     }
+}
+
+//------------------------------------------------------------------------------
+inline void Led::recordColor(uint16_t ledIndex, HsbColor newColor) {
+    maxLedIndex = max(maxLedIndex, ledIndex);
+    currentLedColors[ledIndex] = newColor;
+}
+
+void Led::enforceMilliAmpereLimit() {
+    lastTotalMilliAmperes = 0;
+    for (int i = 0; i < maxLedIndex; i++) {
+        lastTotalMilliAmperes += getMilliAmperesForColor(currentLedColors[i]);
+    }
+    // Calculate a value such as 1, 2, ..., 10 as a tenth for brightness adjustments:
+    uint8_t newBrightnessAdjustmentTenth = min<uint16_t>(10, max<uint16_t>(1, // enforce range 1-10
+        10 * LED_MAX_MILLI_AMPERES / max<uint16_t>(1, lastTotalMilliAmperes)
+    ));
+    // Before increasing the brightness again, be sure that we choose a somewhat stable value to
+    // avoid continuous back and forth.
+    uint8_t oldBrightnessAdjustmentTenth = brightnessAdjustmentTenth;
+    if (brightnessAdjustmentPassedSeconds >= LED_BRIGHTNESS_ADJUSTMENT_SMOOTHING_SECONDS) {
+        brightnessAdjustmentTenthMinOverTime = newBrightnessAdjustmentTenth; // reset
+        brightnessAdjustmentPassedSeconds = 0;
+        brightnessAdjustmentTenth = brightnessAdjustmentTenthMinOverTime;
+    } else {
+        brightnessAdjustmentTenthMinOverTime = min(newBrightnessAdjustmentTenth, brightnessAdjustmentTenthMinOverTime);
+    }
+    brightnessAdjustmentTenth = min(brightnessAdjustmentTenth, newBrightnessAdjustmentTenth);
+    // we need to adjust all leds according to the brightnessAdjustmentTenth:
+    if (brightnessAdjustmentTenth != oldBrightnessAdjustmentTenth) {
+        Serial.printf("enforceMilliAmpereLimit: totalMilliAmperes (virtual) = %d, totalMilliAmperes (after adjustment) = %d, LED_MAX_MILLI_AMPERES=%d, brightNessAdjustmentTenth changed from %d to %d\n", lastTotalMilliAmperes, lastTotalMilliAmperes * brightnessAdjustmentTenth / 10, LED_MAX_MILLI_AMPERES, oldBrightnessAdjustmentTenth, brightnessAdjustmentTenth);
+    }
+    for (int i = 0; i < maxLedIndex; i++) {
+        HsbColor adjustedColor = currentLedColors[i];
+        adjustedColor.B = adjustedColor.B * brightnessAdjustmentTenth / 10;
+        setPixelRaw(i, adjustedColor);
+    }
+}
+
+inline uint32_t Led::getMilliAmperesForColor(RgbColor color) {
+    uint8_t milliAmperesPerColor = 20;
+    uint8_t maxBrightness = 255;
+    return (
+        milliAmperesPerColor * color.R / maxBrightness +
+        milliAmperesPerColor * color.G / maxBrightness +
+        milliAmperesPerColor * color.B / maxBrightness
+    );
 }
 
 //------------------------------------------------------------------------------
@@ -436,10 +487,10 @@ void Led::set(WordclockChanges changed) {
 //------------------------------------------------------------------------------
 
 RgbColor Led::getPixel(uint16_t i) {
-    if (G.Colortype == Grbw) {
-        return RgbColor(strip_RGBW->GetPixelColor(i));
-    }
-    return strip_RGB->GetPixelColor(i);
+    // Do not pass the question to the stripe as we may not have set the actual color as show() might
+    // not have been called yet.
+    // Instead, answer from our cache.
+    return currentLedColors[i];
 }
 
 //------------------------------------------------------------------------------
@@ -458,11 +509,7 @@ bool Led::getState() {
 //------------------------------------------------------------------------------
 
 inline void Led::clearPixel(uint16_t i) {
-    if (G.Colortype == Grbw) {
-        strip_RGBW->SetPixelColor(i, 0);
-    } else {
-        strip_RGB->SetPixelColor(i, 0);
-    }
+    recordColor(i, HsbColor(0, 0, 0));
 }
 
 //------------------------------------------------------------------------------
@@ -696,9 +743,15 @@ void Led::showDigitalClock(const char min1, const char min0, const char h1,
 //------------------------------------------------------------------------------
 
 void Led::show() {
+    enforceMilliAmpereLimit();
     if (G.Colortype == Grbw) {
         strip_RGBW->Show();
     } else {
         strip_RGB->Show();
     }
+}
+
+inline void Led::tickSecond() {
+    brightnessAdjustmentPassedSeconds++;
+    Serial.printf("lastTotalMilliAmperes=%d (%d after adjustment), brightnessAdjustmentTenth=%d\n", lastTotalMilliAmperes, lastTotalMilliAmperes * brightnessAdjustmentTenth / 10, brightnessAdjustmentTenth);
 }

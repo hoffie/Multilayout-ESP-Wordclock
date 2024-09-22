@@ -166,7 +166,7 @@ void setup() {
     incrementPowerCycleCount();
     Serial.print("Power cycle count: ");
     Serial.println(powerCycleCount);
-    if (powerCycleCount == 5) {
+    if (powerCycleCount == NUM_REBOOTS_FOR_RESET) {
         G.sernr++;
         wifiManager.resetSettings();
         wifiManager.reboot();

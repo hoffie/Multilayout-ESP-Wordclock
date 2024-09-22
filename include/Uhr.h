@@ -4,6 +4,7 @@
 
 #define PAYLOAD_LENGTH 30
 #define MAX_ROW_SIZE 22
+#define MAX_COL_SIZE 18
 #define MAX_BIRTHDAY_COUNT 5
 
 enum ClockWords {
