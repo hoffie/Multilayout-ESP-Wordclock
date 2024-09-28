@@ -290,3 +290,5 @@
 
 #define HTTP_AUTH_USER "wortuhr"
 #define HTTP_AUTH_PASSWORD "CHANGEME
+
+#include "config_private.h"
