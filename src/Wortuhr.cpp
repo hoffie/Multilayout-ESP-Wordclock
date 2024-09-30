@@ -207,7 +207,7 @@ void setup() {
         G.itIsVariant = ItIsVariant::Permanent;
         strcpy(G.openWeatherMap.cityid, "");
         strcpy(G.openWeatherMap.apikey, "");
-        strcpy(G.timeserver, "europe.pool.ntp.org");
+        strcpy(G.timeserver, "de.pool.ntp.org");
         strcpy(G.hostname, "wortuhr");
         strcpy(G.scrollingText, "HELLO WORLD ");
 
