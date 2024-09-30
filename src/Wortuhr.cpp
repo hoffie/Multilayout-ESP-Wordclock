@@ -445,7 +445,6 @@ void setup() {
 // Start loop()
 //------------------------------------------------------------------------------
 
-uint8_t loopIdx;
 void loop() {
     time_t utc = time(nullptr);
     struct tm tm;
@@ -458,13 +457,11 @@ void loop() {
 
     network.loop();
 
-    if (loopIdx == 2) {
 #ifdef ESP8266
-        MDNS.update();
+    MDNS.update();
 #endif
-        httpServer.handleClient();
-        webSocket.loop();
-    }
+    httpServer.handleClient();
+    webSocket.loop();
 
 #ifdef MQTT
     //------------------------------------------------
@@ -474,21 +471,14 @@ void loop() {
         mqtt.loop();
     }
 #endif
-    if (loopIdx == 3) {
-        transition->loop(tm); // must be called periodically
+    transition->loop(tm); // must be called periodically
 
-        // make the time run faster in the demo mode of the transition
-        transition->demoMode(_minute, _second);
+    // make the time run faster in the demo mode of the transition
+    transition->demoMode(_minute, _second);
 
-        if (usedUhrType->numPixelsFrameMatrix() != 0) {
-            secondsFrame->loop();
-        }
-
-        clockWork.loop(tm);
+    if (usedUhrType->numPixelsFrameMatrix() != 0) {
+        secondsFrame->loop();
     }
 
-    loopIdx++;
-    if (loopIdx > 3) {
-        loopIdx = 0;
-    }
+    clockWork.loop(tm);
 }

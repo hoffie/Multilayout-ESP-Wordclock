@@ -279,6 +279,12 @@ void Led::enforceMilliAmpereLimit() {
         HsbColor adjustedColor = currentLedColors[i];
         adjustedColor.B = adjustedColor.B * brightnessAdjustmentTenth / 10;
         setPixelRaw(i, adjustedColor);
+        if (i % 10) {
+            // setPixelRaw is really slow and causes too long loop() duration, which results in flaky wifi.
+            // Therefore, yield() here every time after setting 10 LED colors in order to give the system tasks
+            // (wifi) enough time to stay connected to the AP.
+            yield();
+        }
     }
 }
 
