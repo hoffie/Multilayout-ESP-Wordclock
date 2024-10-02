@@ -25,7 +25,7 @@ void Network::resetSettings() {
 String Network::getSSID() { return wifiManager.getWiFiSSID(); }
 
 void Network::setup(const char *hostname) {
-    wifiManager.setDebugOutput(false);
+    wifiManager.setDebugOutput(true);
     wifiManager.setConnectRetries(3);
     wifiManager.setConnectTimeout(20);
     wifiManager.setHostname(hostname);
