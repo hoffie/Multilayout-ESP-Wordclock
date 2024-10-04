@@ -225,7 +225,9 @@ void setup() {
         for (uint8_t i = 0;
              i < sizeof(G.languageVariant) / sizeof(G.languageVariant[0]);
              i++) {
-            G.languageVariant[i] = false;
+            if (i == ItIs45) {
+                G.languageVariant[i] = LANGUAGE_VARIANT_ITIS45_DEFAULT;
+            }
         }
         G.mqtt.state = false;
         G.mqtt.port = 1883;

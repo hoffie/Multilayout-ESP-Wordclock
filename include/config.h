@@ -304,4 +304,6 @@
 */
 #define LED_BRIGHTNESS_ADJUSTMENT_SMOOTHING_SECONDS 5
 
+#define LANGUAGE_VARIANT_ITIS45_DEFAULT false
+
 #include "config_private.h"
