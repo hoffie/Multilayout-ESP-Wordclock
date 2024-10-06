@@ -253,7 +253,7 @@ inline void Led::recordColor(uint16_t ledIndex, HsbColor newColor) {
 
 void Led::enforceMilliAmpereLimit() {
     lastTotalMilliAmperes = 0;
-    for (int i = 0; i < maxLedIndex; i++) {
+    for (int i = 0; i <= maxLedIndex; i++) {
         lastTotalMilliAmperes += getMilliAmperesForColor(currentLedColors[i]);
     }
     // Calculate a value such as 1, 2, ..., 10 as a tenth for brightness adjustments:
@@ -275,7 +275,7 @@ void Led::enforceMilliAmpereLimit() {
     if (brightnessAdjustmentTenth != oldBrightnessAdjustmentTenth) {
         Serial.printf("enforceMilliAmpereLimit: totalMilliAmperes (virtual) = %d, totalMilliAmperes (after adjustment) = %d, LED_MAX_MILLI_AMPERES=%d, brightNessAdjustmentTenth changed from %d to %d\n", lastTotalMilliAmperes, lastTotalMilliAmperes * brightnessAdjustmentTenth / 10, LED_MAX_MILLI_AMPERES, oldBrightnessAdjustmentTenth, brightnessAdjustmentTenth);
     }
-    for (int i = 0; i < maxLedIndex; i++) {
+    for (int i = 0; i <= maxLedIndex; i++) {
         HsbColor adjustedColor = currentLedColors[i];
         adjustedColor.B = adjustedColor.B * brightnessAdjustmentTenth / 10;
         setPixelRaw(i, adjustedColor);
