@@ -1100,6 +1100,9 @@ void ClockWork::clearClockByProgInit() {
         G.progInit = false;
         led.clear();
         led.show();
+        // this discards the previous frame and avoids basing future
+        // transitions on old state:
+        transition->init();
     }
 }
 
